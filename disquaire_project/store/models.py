@@ -18,8 +18,11 @@ class Album(models.Model):
     available = models.BooleanField(default=True)
     title = models.CharField(max_length=200)
     picture = models.URLField()
+    artists = models.ManyToManyField(Artist, related_name='albums', blank=True)
 
 
 class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     contacted = models.BooleanField(default=False)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    album = models.OneToOneField(Album)
