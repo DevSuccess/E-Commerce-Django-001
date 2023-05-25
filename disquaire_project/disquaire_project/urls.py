@@ -20,13 +20,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('store/', include('store.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
-"""
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-    url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]
-"""
-
