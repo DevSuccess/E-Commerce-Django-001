@@ -6,14 +6,12 @@ from .models import Album, Artist, Contact, Booking
 def index(request):
     albums = Album.objects.filter(available=True).order_by('-created_at')[:12]
     context = {'albums': albums}
-
     return render(request, 'store/index.html', context)
 
 
 def listing(request):
     albums = Album.objects.filter(available=True)
     context = {'albums': albums}
-
     return render(request, 'store/listing.html', context)
 
 
@@ -33,21 +31,11 @@ def search(request):
     query = request.GET.get('query')
     if not query:
         albums = Album.objects.all()
-        message = "Veuillez entrer un terme de recherche."
     else:
         albums = Album.objects.filter(title__icontains=query)
         if not albums.exists():
-            albums = Artist.objects.filter(name__icontains=query)
-        if not albums.exists():
-            message = "Misère de misère, PAS DE RESULTAT !"
-        else:
-            formatted_albums = [
-                "<li>{}</li>".format(album.title) for album in albums]
-            message = """
-                Nous avons trouvé les albums correspondant à votre requête ! Les voici :
-                <ul>{}</ul>
-    """.format("\n".join(formatted_albums))
-            
+            albums = Artist.objects.filter(artists__name__icontains=query)
+
     title = "Résultats pour la requête %s" % query
     context = {
         'albums': albums,

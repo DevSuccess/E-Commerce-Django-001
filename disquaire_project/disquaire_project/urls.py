@@ -20,6 +20,9 @@ from django.urls import include, path
 
 from store import views
 
+# Dans le fichier store/urls.py
+app_name = 'store'
+
 urlpatterns = [
     path('', views.index),
     path('admin/', admin.site.urls),
